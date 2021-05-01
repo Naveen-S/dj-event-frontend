@@ -1,0 +1,6 @@
+.error {
+  color: brown;
+  font-size: 5rem;
+  display: flex;
+  align-items: center;
+}
