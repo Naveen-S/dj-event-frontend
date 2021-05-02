@@ -1,8 +1,8 @@
 import Link from 'next/link';
-
 import { TiWarningOutline } from 'react-icons/ti';
 import Layout from '@/components/Layout';
 import styles from '@/styles/404.module.css';
+
 export default function NotFound() {
   return (
     <Layout title='Page not found'>
