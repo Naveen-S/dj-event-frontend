@@ -1,10 +1,13 @@
+import Link from 'next/link';
+
 import _map from 'lodash/map';
 import _size from 'lodash/size';
+
 import { API_URL } from '@/config/index';
 import Layout from '@/components/Layout';
+import EventItem from '@/components/EventItem';
 
 export default function Home(props) {
-  console.log('prps ', props);
   const { events } = props;
 
   const renderEvents = (events) => {
@@ -12,7 +15,7 @@ export default function Home(props) {
       return _map(events, (evt) => {
         return (
           <div key={evt.id}>
-            <h3>{evt.name}</h3>
+            <EventItem event={evt} />
           </div>
         );
       });
@@ -27,9 +30,20 @@ export default function Home(props) {
 
   return (
     <Layout>
-      <div className='flex flex-col justify-center text-center'>
-        <h1 className='text-3xl p-3'>Home</h1>
+      <div className='flex flex-col mx-32 justify-center w-full'>
+        <h1 className='text-3xl py-3 font-extrabold flex justify-center'>
+          Upcoming Events
+        </h1>
         <div className='flex flex-col'>{renderEvents(events)}</div>
+        {_size(events) && (
+          <div className='my-2'>
+            <Link href='/events'>
+              <a className='w-40 py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-gray-500 hover:bg-gray-700'>
+                View all Events
+              </a>
+            </Link>
+          </div>
+        )}
       </div>
     </Layout>
   );
@@ -42,7 +56,7 @@ export async function getStaticProps() {
   console.log('evts ', data);
   return {
     props: {
-      events: data,
+      events: data.slice(0, 3),
       revalidate: 1, // Refresh after 1 sec if data has changed.
     },
   };
